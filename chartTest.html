@@ -1,0 +1,154 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<title>Treatment result graph prototype</title>
+<link rel="stylesheet" type="text/css" href="Main.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="highcharts.js"></script>
+
+<script>
+
+$(function(){
+	$('#container2').fadeTo('slow', 0.2);
+});
+
+
+$(function () {
+        $('#container').highcharts({
+            chart: {
+                type: 'scatter',
+                zoomType: 'xy'
+            },
+            title: {
+                text: 'Intermediate Risk Results'
+            },
+            subtitle: {
+                text: 'Sample data'
+            },
+            xAxis: {
+                title: {
+                    enabled: true,
+                    text: 'Years from treatment'
+                },
+                startOnTick: true,
+                endOnTick: true,
+                showLastLabel: true
+            },
+            yAxis: {
+                title: {
+                    text: '% PSA Progression Free'
+                },
+                
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: 0,
+                y: 0,
+                floating: true,
+                backgroundColor: '#FFFFFF',
+                borderWidth: 1
+            },
+            plotOptions: {
+                scatter: {
+                    marker: {
+                        radius: 6,
+                        states: {
+                            hover: {
+                                enabled: true,
+                                lineColor: 'rgb(100,100,100)'
+                            }
+                        }
+                    },
+                    states: {
+                        hover: {
+                            marker: {
+                                enabled: false
+                            }
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<b>{series.name}</b><br>',
+                        pointFormat: '{point.x} years from treatment, {point.y}% progression free'
+                    }
+                }
+            },
+            series: [{
+                name: 'HDR',
+                color: 'rgba(223, 83, 83, .5)',
+                data: [[5, 86.4],[5,59], [10, 63], [5,69], [5,69], [5,75], [8,88], [10, 80], [10, 72], [10, 53.6]]
+    
+            }, {
+                name: 'EBRT Alone',
+                color: 'rgba(119, 152, 191, .5)',
+                data: [[5, 83], [5,95], [5,57], [5,70], [10, 46], [8, 63], [10, 67], [5, 46], [5,74], [5, 67], [8, 60], [8, 47], [5, 25], [10, 50], [5, 25], [5, 55], [9, 53.3], [10, 52], [8, 72], [5, 66], [5,44], [7,54], [5, 71]]
+            }, {
+            		name: 'EBRT and Seeds',
+            		color: 'rgba(20, 20, 200, .50)',
+            		data: [[10, 92], [8, 77], [10,61], [15, 42], [16, 74], [14, 72], [5,59], [8, 65], [7, 57], [12, 88], [8, 89], [10, 82], [8,88], [12, 62], [8,87], [15, 68], [10, 47], [8, 48]]
+            
+            }, {
+            		name: 'EBRT, Seeds, and ADT',
+            		color: 'rgba(50, 50, 230, .5)',
+            		data: [[12, 92], [10, 93], [8,93], [8,88], [8, 73], [7, 70]]
+            
+            },  {
+            		name: 'Seeds Alone',
+            		color: 'rgba(20, 20, 150, .5)',
+            		data: [[12, 87.3], [10,30], [12, 90], [10, 78], [5, 79]]
+            },  {
+                name: 'Cryo',
+                color: 'rgba(216, 240, 81, .5)',
+                data: [[7,61], [10,45]]
+            }, {
+            		name: 'RRP Surgery',
+            		color: 'rgba(225, 15, 15, .5)',
+            		data: [[10, 40], [10, 55], [10, 44], [15,49], [10,35], [10,33], [7,55], [10, 32], [5, 38], [10, 55.4], [10, 52], [5, 60], [10, 38], [10, 48.5]]   
+            }, {
+            		name: 'Robot Surgery',
+            		color: 'rgba(240, 10, 10, .5)',
+            		data: [[7, 55], [7, 67], [15, 21], [10,44], [6, 56]]
+            		
+            } 
+            ]
+        });
+    });
+//Test code for the renderer function
+/*    
+$(function () {
+    var renderer = new Highcharts.Renderer(
+        $('#container')[0],
+        400,
+        300
+    );
+    
+    var $c = renderer.circle(0, 0, 50).attr({
+        
+        stroke: 'black',
+        'stroke-width': 1
+    })
+    .add();
+    $c.element.setAttribute(
+        'transform',
+        'rotate(45)  scale(1,1.5) translate(200,0)'
+    );
+  
+});
+
+*/
+</script>
+</head>
+
+<body>
+
+
+
+<div id="container2">Here is some content for testing jQuery functions</div>
+
+<div id="container"></div>
+
+
+</body>
+
+</html> 
