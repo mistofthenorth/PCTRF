@@ -1,0 +1,45 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<title>Highcharts Testing HTML</title>
+<link rel="stylesheet" type="text/css" href="Main.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="highcharts.js"></script>
+
+<script>
+
+$(function () { 
+    $('#container').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Fruit Consumption'
+        },
+        subtitle:{
+        		text: 'Testing the subtitle'
+        },
+        xAxis: {
+            categories: ['Apples', 'Bananas', 'Oranges', 'Other']
+        },
+        yAxis: {
+            title: {
+                text: 'Fruit eaten'
+            },
+            min :-5
+        },
+        
+        series: [{
+            name: 'Jane',
+            data: [1, 0, 4, 20]
+        }, {
+            name: 'John',
+            data: [5, 7, 3, 32]
+        }]
+    });
+});
+
+</script>
+
+
+<div id="container">This is a test</div>
