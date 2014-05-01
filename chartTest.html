@@ -17,11 +17,12 @@ $(function () {
         $('#container').highcharts({
             chart: {
                 type: 'scatter',
-                zoomType: 'xy'
+                zoomType: 'xy',
             },
             title: {
                 text: 'Intermediate Risk Results'
             },
+            
             subtitle: {
                 text: 'Sample data'
             },
@@ -35,15 +36,24 @@ $(function () {
                 showLastLabel: true,
                 //This adds the ascending grid lines starting at the x-axis and moving vertically
                 gridLineDashStyle: 'dot',
-                gridLineWidth: 1
+                gridLineWidth: 1,
+                min: 0
                 
             },
             yAxis: {
                 title: {
                     text: '% PSA Progression Free'
                 },
+                min: 0,
+                max: 100,
+                //Optional gradient for the y axis for clarity
+                alternateGridColor: {linearGradient: ['10%', 0, '100%', 0],
+                														  stops: [[0, 'white'], 
+                														  			 [1, '#DCDCDC']]}
                 
             },
+          
+            
             legend: {
                 layout: 'vertical',
                 align: 'right',
@@ -58,6 +68,8 @@ $(function () {
                 scatter: {
                     marker: {
                         radius: 6,
+                        //Uncomment to change all item to circles
+                        //symbol: 'circle',
                         states: {
                             hover: {
                                 enabled: true,
@@ -75,10 +87,14 @@ $(function () {
                     tooltip: {
                         headerFormat: '<b>{series.name}</b><br>',
                         pointFormat: '{point.x} years from treatment, {point.y}% progression free'
-                    }
+                    },
+                		animation:{
+                				//eliminates the startup animation
+                				duration: 0
+                		}
                 }
             },
-            
+        
             series: [{
                 name: 'HDR',
                 color: 'rgba(223, 83, 83, .5)',
@@ -115,7 +131,24 @@ $(function () {
             		color: 'rgba(240, 10, 10, .5)',
             		data: [[7, 55], [7, 67], [15, 21], [10,44], [6, 56]]
             		
-            }]
+            },  {
+            		name: 'Ellipse Sample',
+            		type: 'scatter',
+            		color: 'rgba(255, 255, 255, .)',
+            		marker: { radius: 2,
+            							symbol: 'circle' },
+            		data: [[5.6,81.4],[6,83],[6.5,84.4],[7,85.5],[7.5,87],[8,88],[8.5,88.6],[9,89.2],[9.5,89.7],
+            		[10,90],[10.5,89.6],[11,89],[11.5,88.6],[12,88],[12.5,87],[13,85.5],[13.5,84.5],[14,83],[14.5,81.5],
+            		[14.5,77.9],[14,76],[13.5,73.8],[13,72],[12.5,71],[12,70],[11.5,68.3],[11,67],[10.5,66],[10,65.5],
+            		[9.5,66.2],[9,67],[8.5,68.2],[8,70],[7.5,71],[7,72],[6.5,74],[6,76],[5.5,78.6]]
+            
+            
+            }
+            
+            
+            ]
+						
+						
 						
             
         });

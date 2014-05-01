@@ -1,0 +1,53 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<title>Line Chart Test</title>
+<link rel="stylesheet" type="text/css" href="Main.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="highcharts.js"></script>
+
+<script>
+
+$(function() {
+	$('#container').highcharts({
+			chart: {
+				//inverted: 'true'
+			},
+			title: {
+				text: 'Population ages 65 and over (% of total)'
+			},
+			yAxis: {
+				title: {
+				text: 'Percentage %'
+				}
+			},
+			xAxis: {
+				//categories: ['1980', '1981', '1990',],
+				allowDecimals: false
+			},
+			plotOptions: {
+				scatter: {
+					marker: {
+						symbol: 'circle',
+						radius: 5
+					},
+				}
+			},
+			
+			series: [{
+				pointStart: 1980,
+				name: 'Japan',
+				data: [9,9, 30]
+			},
+						{
+				name: 'Scatter Sample',
+				type: 'scatter',
+				data: [[1980, 5], [1980.05,5.5]]
+			}]
+
+	});
+});
+</script>
+
+
+<div id="container"></div>
