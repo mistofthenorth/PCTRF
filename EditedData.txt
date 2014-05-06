@@ -1,0 +1,80 @@
+Seeds, EBRT, and ADT sample data
+
+Line 79 - % free - 78, # of years - 7, Participants - 59
+
+Line 76 - % free - 82, # of years - 8, Participants - 175
+
+Line 54 - % free - 88, # of years - 8, Participants - 584
+
+Line 52 - % free - 93, # of years - 8, Participants - 69
+
+Line 49 - % free - 93, # of years - 10, Participants - 60
+
+Line 46 - % free - 92, # of years - 12, Participants - 284
+
+Line 31 - no results listed
+
+Calculation of standard deviation for % free- 
+
+Find the mean
+
+87.66666
+
+Find the variance
+
+93.444
+32.111
+0.11111
+28.4444
+28.4444
+18.783556
+
+Average variance = 33.5564
+
+Standard deviation
+
+9.66666
+5.666666
+0.333333
+5.333333
+5.333333
+4.333333
+
+Average deviation = 5.7927
+
+Calculation of standard deviation for % free- 
+
+Find the mean
+
+8.83333
+
+Find the variance
+
+3.36109
+0.6944
+0.6944
+0.6944
+1.36111
+3.16667
+
+Average variance = 1.661999
+
+Standard Deviation
+
+1.83333
+0.8333
+0.8333
+0.8333
+1.16667
+1.77951
+
+Average deviation = 1.2891844
+
+Natural log of sample sizes
+
+4.077
+5.1647
+6.3699
+4.2341
+4.0943
+5.64897
