@@ -1,0 +1,59 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<title>Sample Bar Chart</title>
+<link rel="stylesheet" type="text/css" href="Main.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+</head>
+
+<script>
+
+$(function () { 
+    $('#container').highcharts({
+        chart: {
+            type: 'column',
+            style: {fontWeight: 'bold'}
+        },
+        title: {
+            text: 'High Risk Individuals'
+        },
+        subtitle:{
+        		//text: 'Testing the subtitle'
+        },
+        xAxis: {
+            categories: [ 'RRP Surgery', 'Robot Surgery', 'EBRT and Seeds','EBRT, Seeds, and ADT',  'EBRT Alone' ,'EBRT and ADT',
+            							'Hypo EBRT', 'Seeds and ADT', 'Seeds Alone', 'HDR', 'Protons', 'Hifu', 'Cryo']
+        },
+        yAxis: {
+            title: {
+                text: '% Progression Free',
+            },
+
+            min : 0,
+            max : 100,
+            alternateGridColor: {linearGradient: ['10%', 0, '100%', 0],
+                													stops: [[0, 'white'], 
+                														  	 [1, '#DCDCDC']]}
+        },
+        plotOptions:{column: {stacking: 'normal'}},
+        
+        series: [{
+            name: 'Non-Progression Free',
+            data: [48, 40, 25, 15, 38, 37, 51, 45, 37, 55, 43, 52, 62],
+            stack: 'Both',
+            color: 'rgba(220, 10, 10, .9)',
+        }, {
+            name: 'Progression Free',
+            data: [52, 60, 75, 85, 62, 63, 49, 55, 63, 45, 57, 48, 38],
+            stack: 'Both',
+            color: 'rgba(20, 20, 200, .9)',
+        }]
+    });
+});
+
+</script>
+<body>
+<div id="container"></div>
+
+</body>

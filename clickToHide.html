@@ -5,23 +5,99 @@
 <link rel="stylesheet" type="text/css" href="Main.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+<script src="js/chartDefaults.js"></script>
 </head>
 
 <script>
 
-
-$(function () {
+	$(function () {
         $('#container').highcharts({
             chart: {
                 type: 'scatter',
                 zoomType: 'xy',
+                style: {fontSize: '14'},
+                
             },
             title: {
                 text: 'Low Risk Results'
             },
-            
-            subtitle: {
-                text: 'Data updated 2014'
+						subtitle: {
+								text: properties.subtitle,
+						},
+
+            exporting: {
+            		sourceWidth: 1200,
+            		sourceHeight: 800,
+            		filename: 'PCTRF',
+            		buttons: {
+            				exportButton:{
+            						text: 'Download',
+            						menuItems: Highcharts.getOptions().exporting.buttons.contextButton.menuItems.splice(2)
+            					},
+            				printButton: {
+            						text: 'Print',
+            						onclick: function(){
+            							this.print();
+            						}
+            					},
+            				hideButton:{
+            						text: 'Hide All',
+            						onclick: function(){            							
+              							function loop(i){
+            									var chart = $('#container').highcharts();
+															if(i==0){
+															chart.showLoading();
+															}
+															
+															if(i==(chart.series.length-1)){
+															chart.hideLoading();
+															}
+															
+															if(chart.series[i].visible == true){
+            									chart.series[i].hide();
+            									}
+            									i++;
+            									if(i<chart.series.length){
+            									setTimeout(function(){ loop(i);}, 20);
+            									}
+            									
+            							}
+            							i = 0;
+            							setTimeout(loop(i), 10);
+            						}
+            					},
+            				showButton:{
+            						text: 'Show All',
+            						onclick: function(){            							
+              							function loop(i){
+            									var chart = $('#container').highcharts();
+															if(i==0){
+															chart.showLoading();
+															}
+															
+															if(i==(chart.series.length-1)){
+															chart.hideLoading();
+															}
+															
+															if(chart.series[i].visible == false){
+            									chart.series[i].show();
+            									}
+            									i++;
+            									if(i<chart.series.length){
+            									setTimeout(function(){ loop(i);}, 20);
+            									}
+            									
+            							}
+            							i = 0;
+            							setTimeout(loop(i), 10);
+            						}
+            					},
+            						            				            						            				
+            				contextButton:{
+            						enabled: false
+            						}
+            				}
             },
             xAxis: {
                 title: {
@@ -34,8 +110,14 @@ $(function () {
                 //This adds the ascending grid lines starting at the x-axis and moving vertically
                 gridLineDashStyle: 'dot',
                 gridLineWidth: 1,
-                min: 2,
-                max: 16
+                min: 3,
+                max: 16,
+                labels: {
+                		style: {
+                    fontSize: '17'
+                		}
+            		}
+                
                 
             },
             yAxis: {
@@ -47,7 +129,13 @@ $(function () {
                 //Optional gradient for the y axis for clarity
                 alternateGridColor: {linearGradient: ['10%', 0, '100%', 0],
                 														  stops: [[0, 'white'], 
-                														  			 [1, '#DCDCDC']]}
+                														  			 [1, '#DCDCDC']]},
+                labels: {
+                		style: {
+                    fontSize: '17'
+                		}
+            		}
+                														  			 
                 
             },
           
@@ -56,11 +144,13 @@ $(function () {
                 layout: 'vertical',
                 align: 'right',
                 verticalAlign: 'bottom',
-                x: -30,
-                y: -90,
+                x: -10,
+                y: -60,
                 floating: true,
                 backgroundColor: '#FFFFFF',
-                borderWidth: 1
+                borderWidth: 1,
+                //maxHeight will allow scrolling on the legend
+                //maxHeight: 144
             },
             plotOptions: {
             		series:  {
@@ -76,7 +166,7 @@ $(function () {
             							},
                 scatter: {
                     marker: {
-                        radius: 5,
+                        radius: 6,
                         //Uncomment to change all item to circles
                         //symbol: 'circle',
                         states: {
@@ -89,14 +179,16 @@ $(function () {
                     states: {
                         hover: {
                             marker: {
-                                enabled: false
+                                enabled: true
                             }
                         }
                     },
                     tooltip: {
-                    	
+                    		//This tooltip is overridden by the formatter function below
+                    		/*
                         headerFormat: '<b>{series.name}</b><br>',
                         pointFormat: '{point.x} years from treatment, {point.y}% progression free',
+                        */
                         
                     },
                 		animation:{
@@ -106,57 +198,60 @@ $(function () {
                 }
             },
         		tooltip:{
-        			enabled: false
+        			enabled: true,
+        			formatter: function() {
+        				//This if statement prevents the tooltip from appearing on the standard deviation ellipses
+        				if(this.series.data.length > 300){
+        				return false;
+        				}
+        				else{
+        				var text = '<b>' + this.series.name + ',</b> ' + this.series.data.length + ' data points<br>' 
+        				+ this.point.x + ' years from treatment<br>'+ this.point.y + '% progression free';
+        				return text;
+        				}
+        			}
         		},
+
             series: 
             [
-            {
-            		name: 'RRP Surgery',
-            		color: 'rgba(200, 20, 20, .5)',
-            		data: [[6,88],[10,82],[10,66],[7,85],[15,82],[8,86],[10,86]]
+            //Uncomment to create a new legend item for hiding and showing all items
+            /*	{
+            		name: 'Click to hide/show all',
+            		events: {
+            		
+                    legendItemClick: function(event) {
+                    		
+                    		        var chart = $('#container').highcharts();
+																
+            										if (this.visible == true){
+            											for (i=1; i<chart.series.length; i++){
+            											chart.series[i].hide();
+            											}
+            										}
+            										else{
+            											for (i=1; i<chart.series.length; i++){
+            											chart.series[i].show();
+            											}
+            										
+            										} 
+            										
+            											         										
+                    }
+                   
+                },
+                 
+                marker: {symbol: 'circle'},
+                color: 'rgba(200,200,200,1)'
             },
+            */
             {
-            		name: 'Robot Surgery',
-            		color: 'rgba(220, 20, 50, .5)',
-            		data: [[10,85],[7,93],[7,92]]
-            
-            },
-            {
-            		name: 'Seeds and EBRT',
-            		color: 'rgba(20, 20, 200, .5)',
-            		data: [[10,98],[10,93],[15,92],[12,90],[7,89]]
-            },
-            {
-            		name: 'EBRT Alone',
-            		color: 'rgba(20, 220, 10, .5)',
-            		data: [[10,58],[7,92],[10,58],[5,88],[5,95],[7,98.8],[8,87],[9,77.4],[8,85],[7,90],[5,97]]
-            },
-            {
-            		name: 'Seeds Alone',
-            		color: 'rgba(20, 50, 200, .5)',
-            		data: [[8,93],[8,89],[10,90.5],[5,95.2],[10,88],[7,86],[7,85],[5,95],[8,96],[10,98],[5,95],[10,94],[8,98],[15,90],[7,95.9],[5,94],[12,89],[7,91],
-            		[15,89.5],[12,97],[10,98],[7,95],[8,96]]
-            },
-            {
-            		name: 'Protons',
-            		color: 'rgba(20, 100, 20, .5)',
-            		data: [[8,90],[5,91],[5,79],[10,93]]
-            },
-            {
-            		name: 'HDR',
-            		color: 'rgba(20, 120, 230, .5)',
-            		data: [[10,92],[10,94]]
-            },
-            {
-            		name: 'Hifu',
-            		color: 'rgba(200, 200, 30, .5)',
-            		data: [[8,76],[10,68]]
-            },
-            {
-            		name: 'Surgery Standard Deviation',
-            		color: 'rgba(220, 20, 50, .5)',
-            		marker: {radius: 1.5,
+            		name: 'Surgery \u03C3',
+            		color: properties.redColor,
+            		marker: {radius: 2,
             							symbol: 'circle'},
+            		visible: false,
+            		id: 'sde',
+            		
             		data: [
             		
 								[13.1993881765	,82.8421702378],
@@ -258,10 +353,11 @@ $(function () {
             },
 
             {
-            		name: 'Seeds and EBRT Standard Deviation',
-            		color: 'rgba(20, 20, 200, .5)',
-            		marker: {radius: 1.5,
+            		name: 'Seeds and EBRT \u03C3',
+            		color: properties.blueColor,
+            		marker: {radius: 2,
             							symbol: 'circle'},
+            		visible: false,
             		data:
             		[
 								[12.7001063175	,96.1510453961],
@@ -363,10 +459,11 @@ $(function () {
             },
 
             {
-            		name: 'Seeds Alone Standard Deviation',
-            		color: 'rgba(20, 50, 200, .5)',
-            		marker: {radius: 1.5,
+            		name: 'Seeds Alone \u03C3',
+            		color: properties.blueColor,
+            		marker: {radius: 2,
             							symbol: 'circle'},
+            		visible: false,
             		data: [[12.5121520415,94.1007915432],[12.5368117101,94.017436804],[12.5603188102,93.933760113],[12.5826661812,93.8497869592],[12.6038470159,93.7655429215],
             		[12.6238548624,93.6810536614],[12.6426836262,93.5963449153],[12.6603275718,93.5114424862],[12.6767813247,93.4263722362],[12.692039873,93.3411600786],
             		[12.7060985686,93.2558319698],[12.7189531293,93.1704139016],[12.7305996393,93.084931893],[12.7410345511,92.9994119829],[12.7502546861,92.9138802213],
@@ -443,10 +540,11 @@ $(function () {
             },
 
             {
-            		name: 'Protons Standard Deviation',
-            		color: 'rgba(20, 100, 20, .5)',
-            		marker: {radius: 1.5,
+            		name: 'Protons \u03C3',
+            		color: properties.lightGreenColor,
+            		marker: {radius: 2,
             							symbol: 'circle'},
+            		visible: false,
             		
             		data:
             		[
@@ -550,10 +648,11 @@ $(function () {
             },
 
             {
-            		name: 'EBRT Alone Standard Deviation',
-            		color: 'rgba(20, 220, 10, .5)',
-            		marker: {radius: 1.5,
+            		name: 'EBRT Alone \u03C3',
+            		color: properties.greenColor,
+            		marker: {radius: 2,
             							symbol: 'circle'},
+            		visible: false,
             		data:
             		[[8.8126053906,83.1497003299],[8.846081454,82.8339311412],[8.8791542405,82.5182162193],[8.9118136758,82.202651734],[8.9440498115,81.8873338094],
             		[8.9758528281,81.5723584943],[9.0072130382,81.2578217332],[9.0381208892,80.9438193372],[9.0685669661,80.6304469544],[9.0985419949,80.317800041],
@@ -636,7 +735,65 @@ $(function () {
             		
             		
             		]
-            }
+            },
+            {
+            		name: 'RRP Surgery',
+            		color: properties.redColor,
+            		marker: {symbol: 'circle'},
+            		data: [[6,88],[10,82],[10,66],[7,85],[15,82],[8,86],[10,86]],
+            		visible: false,
+            		
+            },
+            {
+            		name: 'Robot Surgery',
+            		color: properties.redColor,
+            		marker: {symbol: 'square'},
+            		data: [[10,85],[7,93],[7,92]],
+            		visible: false
+            
+            },
+            {
+            		name: 'Seeds and EBRT',
+            		color: properties.blueColor,
+            		marker: {symbol: 'square'},
+            		data: [[10,98],[10,93],[15,92],[12,90],[7,89]],
+            		visible: false
+            },
+            {
+            		name: 'EBRT Alone',
+            		color: properties.greenColor,
+            		data: [[10,58],[7,92],[10,58],[5,88],[5,95],[7,98.8],[8,87],[9,77.4],[8,85],[7,90],[5,97]],
+            		visible: false
+            },
+            {
+            		name: 'Seeds Alone',
+            		color: properties.blueColor,
+            		data: [[8,93],[8,89],[10,90.5],[5,95.2],[10,88],[7,86],[7,85],[5,95],[8,96],[10,98],[5,95],[10,94],[8,98],[15,90],[7,95.9],[5,94],[12,89],[7,91],
+            		[15,89.5],[12,97],[10,98],[7,95],[8,96]],
+            		visible: false
+            },
+            {
+            		name: 'Protons',
+            		color: properties.lightGreenColor,
+            		marker: {symbol: 'square'},
+            		data: [[8,90],[5,91],[5,79],[10,93]],
+            		visible: false
+            },
+            {
+            		name: 'HDR',
+            		color: properties.lightBlueColor,
+            		marker: {symbol: 'circle'},
+            		data: [[10,92],[10,94]],
+            		visible: false
+            },
+            {
+            		name: 'Hifu',
+            		color: properties.yellowColor,
+            		marker: {symbol: 'circle'},
+            		data: [[8,76],[10,68]],
+            		visible: false
+            },
+            
 
             
             
@@ -645,13 +802,38 @@ $(function () {
             
             ]		                    
         });
-        				
+        
+        
 				
     });
 
+
+
+
+
 </script>
 
+
 <body>
-<div id="container"></div>
+<button type="button" id="show">Show Surgery</button>
+<button type="button" id="hide">Hide Surgery</button>
+<script>
+$("#show").click(function(){
+var chart = $('#container').highcharts();
+chart.series[0].show();
+chart.series[5].show();
+chart.series[6].show();
+});
+
+$("#hide").click(function(){
+var chart = $('#container').highcharts();
+chart.series[0].hide();
+chart.series[5].hide();
+chart.series[6].hide();
+
+});
+</script>
+<div id="container">
+
 
 </body>
