@@ -2,8 +2,8 @@ $(function () {
         $('#container').highcharts({
             chart: {
                 type: 'scatter',
-                zoomType: 'xy',
-                style: {fontSize: '14'},
+                style: {fontSize: '14',
+                				fontfamily: 'Helvetica Neue,Arial,Helvetica,sans-serif'},
                 
             },
             title: {

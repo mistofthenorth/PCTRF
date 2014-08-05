@@ -3,7 +3,6 @@ $(function () {
         $('#container').highcharts({
             chart: {
                 type: 'scatter',
-                zoomType: 'xy',
                 style: {fontSize: '14'},
             },
             title: {
