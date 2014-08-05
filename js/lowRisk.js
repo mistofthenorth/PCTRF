@@ -17,70 +17,8 @@ $(function () {
             		sourceWidth: 1200,
             		sourceHeight: 800,
             		filename: 'PCTRF',
-            		buttons: {
-            				exportButton:{
-            						text: 'Download',
-            						menuItems: Highcharts.getOptions().exporting.buttons.contextButton.menuItems.splice(2)
-            					},
-            				printButton: {
-            						text: 'Print',
-            						onclick: function(){
-            							this.print();
-            						}
-            					},
-            				hideButton:{
-            						text: 'Hide All',
-            						onclick: function(){            							
-              							function loop(i){
-            									var chart = $('#container').highcharts();
-															if(i==0){
-															chart.showLoading();
-															}
-															
-															if(i==(chart.series.length-1)){
-															chart.hideLoading();
-															}
-															
-															if(chart.series[i].visible == true){
-            									chart.series[i].hide();
-            									}
-            									i++;
-            									if(i<chart.series.length){
-            									setTimeout(function(){ loop(i);}, 20);
-            									}
-            									
-            							}
-            							i = 0;
-            							setTimeout(loop(i), 10);
-            						}
-            					},
-            				showButton:{
-            						text: 'Show All',
-            						onclick: function(){            							
-              							function loop(i){
-            									var chart = $('#container').highcharts();
-															if(i==0){
-															chart.showLoading();
-															}
-															
-															if(i==(chart.series.length-1)){
-															chart.hideLoading();
-															}
-															
-															if(chart.series[i].visible == false){
-            									chart.series[i].show();
-            									}
-            									i++;
-            									if(i<chart.series.length){
-            									setTimeout(function(){ loop(i);}, 20);
-            									}
-            									
-            							}
-            							i = 0;
-            							setTimeout(loop(i), 10);
-            						}
-            					},
-            						            				            						            				
+            		type: 'application/pdf',
+            		buttons: {            						            				            						            				
             				contextButton:{
             						enabled: false
             						}
