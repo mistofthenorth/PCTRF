@@ -7,5 +7,6 @@ var properties = {
 									hifuColor: 'rgba(20, 22, 25, .7)',
 									cryoColor: 'rgba(160, 30, 250, .7)',
 									
-									yText: 'Treatment Success <br> % PSA Progression Free'
+									yText: 'Worse &lt;-- Treatment Success --&gt; Better<br> % PSA Progression Free',
+									xText: 'Shorter &lt;-- Years from treatment --&gt; Longer',
 }

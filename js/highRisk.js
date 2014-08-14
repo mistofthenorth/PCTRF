@@ -26,7 +26,7 @@ $(function () {
             xAxis: {
                 title: {
                     enabled: true,
-                    text: 'Years from treatment',
+                    text: properties.xText,
                     margin: 20
                 },
                 startOnTick: true,
@@ -124,7 +124,8 @@ $(function () {
         			formatter: function() {
         				//This if statement prevents the tooltip from appearing on the standard deviation ellipses
         				if(this.series.data.length > 300){
-        				return false;
+        				var text = '<b>' + this.series.name + '</b>' + '<br> Standard Deviation';
+        				return text;
         				}
         				else{
         				var text = '<b>' + this.series.name + ',</b> ' + this.series.data.length + ' data points<br>' 
